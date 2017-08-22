@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django import forms
 from login.models import User
 
+
 #表单
 class UserForm(forms.Form): 
     username = forms.CharField(label='用户名',max_length=100)
@@ -20,11 +21,11 @@ def regist(req):
             username = uf.cleaned_data['username']
             password = uf.cleaned_data['password']
             #添加到数据库
-            User.objects.create(username= username,password=password)
+            User.objects.create(username=username,password=password)
             return HttpResponse('regist success!!')
     else:
         uf = UserForm()
-    return render_to_response('regist.html',{'uf':uf}, context_instance=RequestContext(req))
+    return render_to_response('regist.html',{'uf':uf})
 
 #登陆
 def login(req):
@@ -35,7 +36,7 @@ def login(req):
             username = uf.cleaned_data['username']
             password = uf.cleaned_data['password']
             #获取的表单数据与数据库进行比较
-            user = User.objects.filter(username__exact = username,password__exact = password)
+            user = User.objects.filter(username__exact=username,password__exact=password)
             if user:
                 #比较成功，跳转index
                 response = HttpResponseRedirect('/login/index/')
@@ -47,7 +48,7 @@ def login(req):
                 return HttpResponseRedirect('/login/login/')
     else:
         uf = UserForm()
-    return render_to_response('login.html',{'uf':uf},context_instance=RequestContext(req))
+    return render_to_response('login.html',{'uf':uf})
 
 #登陆成功
 def index(req):
