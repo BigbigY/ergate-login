@@ -33,8 +33,10 @@ def login(req):
         uf = UserForm(req.POST)
         if uf.is_valid():
             #获取表单用户密码
-            username = uf.cleaned_data['username']
-            password = uf.cleaned_data['password']
+            #username = uf.cleaned_data['username']
+            #password = uf.cleaned_data['password']
+            username = req.POST.get('username')
+            password = req.POST.get('password')
             #获取的表单数据与数据库进行比较
             user = User.objects.filter(username__exact=username,password__exact=password)
             if user:
