@@ -30,6 +30,4 @@ def index(request):
 
 #退出
 def logout(request):
-    #清理cookie里保存username
-    response.delete_cookie('username')
     return HttpResponseRedirect('login')
